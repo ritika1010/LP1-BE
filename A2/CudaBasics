@@ -1,0 +1,42 @@
+(Compute Unified Device Architecture) 
+
+Nvidia CUDA Compiler (NVCC) 
+
+CUDA is a parallel computing platform and programming model that makes using a GPU for general purpose computing simple and elegant.
+
+CUDA is a parallel computing platform and programming model developed by Nvidia for general computing on its own GPUs (graphics processing units). CUDA enables developers to speed up compute-intensive applications by harnessing the power of GPUs for the parallelizable part of the computation.
+
+For example, GPU programming has been used to accelerate video, digital image, and audio signal processing, statistical physics, scientific computing, medical imaging, computer vision, neural networks and deep learning, cryptography, and even intrusion detection, among many other areas.
+
+Nvidia CUDA Compiler (NVCC) is a proprietary compiler by Nvidia intended for use with CUDA. CUDA code runs on both the CPU and GPU. ... NVCC can output either C code (CPU Code) that must then be compiled with the rest of the application using another tool or PTX or object code directly.
+
+
+Advantages of CUDA over the traditional approach to GPGPU computing:
+
+Programming interface of CUDA applications is based on the standard C language with extensions, which facilitates the learning curve of CUDA
+CUDA provides access to 16 KB of memory (per multiprocessor) shared between threads, which can be used to setup cache with higher bandwidth than texture lookups
+More efficient data transfers between system and video memory
+No need in graphics APIs with their redundancy and overheads
+Linear memory addressing, gather and scatter, writing to arbitrary addresses
+Hardware support for integer and bit operations
+
+Main limitations of CUDA:
+
+No recursive functions
+Minimum unit block of 32 threads
+Closed CUDA architecture, it belongs to NVIDIA
+
+
+
+One fundamental difference is that OpenMP on CPUs offers O(100) parallelism, whereas CUDA on GPUs offers O(10,000) parallelism, and in fact requires that for good performance. If your simulations can take advantage of the massive parallelism of the GPU, you should be able to achieve nice speedups.
+
+
+
+ The results show that in most cases the choice is between serial CPU and Cuda. However there are two cut-offs, the number of elements and the number of operations per element. In general if the number of elements is 10, then it seems the CPU is superior. For medium size problems 100-1000, then you need to have at least 1000 operations per element to beat serial CPU performance. Beyond 1000 elements, cuda is the best. 
+
+  
+  In general small problems (<100 elements), or medium size problems (100-1000 elements) with a simple calculations (<10^5 total operations) are best executed in serial on the CPU. For larger SIMD problems, Cuda is superior over OpenMP. However, Cuda only offers a significant advantage when the kernels are optimized (i.e. more development effort is required with Cuda). So OpenMP should be chosen when you either have a large MIMD problem or you want to parallel a code quickly.
+  
+  
+  Vector-reduction arithmetic accepts vectors as inputs and produces scalars as outputs. ... An interleaved technique is introduced to reduce multiple vectors to corresponding scalars using the same arithmetic pipeline. The pipeline can be fully utilized by interleaving multiple vector-reduction processes.
+

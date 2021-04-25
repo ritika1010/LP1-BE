@@ -1,0 +1,45 @@
+_____CUDA MIN MAX STD_DEV VARIANCE______________________
+
+	__global__= called by cpu but executed on gpu
+		func_name << n_blocks,n_threads >> (parameters...);
+		runs parellely for the number of threads automatically ... no need to mention explicitly
+		
+	blockDim.x-->size of the block (columns * rows)
+	threadId.x-->thread id of currently executing thread
+	blockId.x-->block id of current block
+	
+	1)	VECTOR ADDITION
+	
+	vectorAdd <<< m, n >>> (a,b,c);
+	id=blockIdx.x*blockDim.x+threadIdx.x;
+	
+	2)	MATRIX MULTIPLICATION
+	
+	matProduct <<< grid, threadblock >>> (a,b,c);
+	dim3 grid(1,1)
+	dim3 threadblock(col2,row1)
+	
+	col = x = blockIdx.x * blockDim.x + threadIdx.x;
+	row = y = blockIdx.y * blockDim.y + threadIdx.y;
+	
+	if(col< col2 && row<row1)
+	for(int j=0; j<col1; j++)
+	{
+		sum += a[row * col1 + j] + b[col2 * j + row];
+	}
+	c[col2 * row + col] = sum;
+	
+	3)	MATRIX VECTOR MULTIPLICATION
+	
+	matProduct <<< grid, threadblock >>> (a,b,c);
+	dim3 grid(1,1)
+	dim3 threadblock(col2,row1)
+	
+	id = blockIdx.x * blockDim.x + threadIdx.x;
+	
+	if(id<m)
+	for(int k=0; k<n; k++)
+	{
+		sum += vec[k] + mat[(k*m) + id];
+	}
+	result[id] = sum;
